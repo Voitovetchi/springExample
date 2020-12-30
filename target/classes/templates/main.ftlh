@@ -3,6 +3,7 @@
 
 <@c.page>
     <@l.logout />
+    <span><a href = "/user">Users list</a></span>
 <div>
 
 </div>
