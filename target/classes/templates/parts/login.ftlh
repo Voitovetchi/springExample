@@ -1,6 +1,9 @@
 <#macro login path isRegisterForm>
 <form action="${path}" method="post">
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
+    <div class="mb-2 font-weight-bold">
+        Log in
+    </div>
     <div class="form-group row">
         <label class="col-sm-1 col-form-label">Name :</label>
         <div class="col-sm-6">
@@ -26,9 +29,9 @@
 </form>
 </#macro>
 
-<#macro logout>
+<#macro logout userIsActive>
 <form action="/logout" method="post">
-        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <button class="btn btn-primary" type="submit">Sign Out</button>
+    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+    <button class="btn btn-primary" type="submit"><#if userIsActive>Sign Out<#else>Sign In</#if></button>
 </form>
 </#macro>
