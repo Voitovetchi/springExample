@@ -2,9 +2,11 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
-    <div class="mb-2 font-weight-bold">
-            Log in
-    </div>
+    <#if Session?? && Session.SPRING_SECURITY_LAST_EXCEPTION??>
+        <div class="alert alert-danger" role="alert">
+            ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
+        </div>
+    </#if>
     <#if message??>
         <#if message == "Activation failed">
             <div class="alert alert-danger" role="alert">

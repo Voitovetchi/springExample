@@ -6,15 +6,9 @@
         Add new user
     </div>
     <#if message??>
-        <#if message == "User exists">
-            <div class="alert alert-danger" role="alert">
-                ${message?ifExists}
-            </div>
-        <#else>
-            <div class="alert alert-info" role="alert">
-                    ${message?ifExists}
-            </div>
-        </#if>
+        <div class="alert alert-info" role="alert">
+            ${message?ifExists}
+        </div>
     </#if>
     <@l.login "/registration" true/>
 </@c.page>
