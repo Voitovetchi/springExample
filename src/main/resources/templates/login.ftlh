@@ -8,15 +8,9 @@
         </div>
     </#if>
     <#if message??>
-        <#if message == "Activation failed">
-            <div class="alert alert-danger" role="alert">
-                ${message?ifExists}
-            </div>
-        <#else>
-            <div class="alert alert-success" role="alert">
-                ${message?ifExists}
-            </div>
-        </#if>
+        <div class="alert alert-${messageType}" role="alert">
+            ${message}
+        </div>
     </#if>
     <@l.login "/login" false/>
 </@c.page>

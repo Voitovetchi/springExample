@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -26,14 +27,22 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(
+            @RequestParam("password2") String passwordConfirmation,
             @Valid User user,
             BindingResult bindingResult,
-            Model model) {
-        if (user.getPassword() != null && !user.getPassword().equals(user.getPassword2())) {
+            Model model
+    ) {
+        boolean isConfirmEmpty = passwordConfirmation.isEmpty();
+
+        if (isConfirmEmpty) {
+            model.addAttribute("password2Error", "Password confirmation can not be empty");
+        }
+
+        if (user.getPassword() != null && !user.getPassword().equals(passwordConfirmation)) {
             model.addAttribute("passwordError", "Passwords are different!");
         }
 
-        if (bindingResult.hasErrors()) {
+        if (isConfirmEmpty || bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
 
             model.mergeAttributes(errors);
@@ -56,8 +65,10 @@ public class RegistrationController {
         boolean isActive = userService.activateUser(code);
 
         if (isActive) {
+            model.addAttribute("messageType", "success");
             model.addAttribute("message", "Activated");
         } else {
+            model.addAttribute("messageType", "danger");
             model.addAttribute("message", "Activation failed");
         }
 
